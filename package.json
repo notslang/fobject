@@ -1,0 +1,34 @@
+{
+  "name": "fobject",
+  "version": "0.0.0",
+  "description": "A simple promise-based wrapper for file operations that treats files as objects.",
+  "main": "./lib",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/slang800/fobject.git"
+  },
+  "keywords": [
+    "file",
+    "object",
+    "promise"
+  ],
+  "author": "Sean Lang <slang800@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/slang800/fobject/issues"
+  },
+  "homepage": "https://github.com/slang800/fobject",
+  "devDependencies": {
+    "mocha": "^1.18.2",
+    "should": "^3.2.0"
+  },
+  "dependencies": {
+    "when": "^3.0.1"
+  }
+}
