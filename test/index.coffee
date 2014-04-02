@@ -31,5 +31,5 @@ describe 'base functions', ->
         done()
       )
 
-  #it 'supports write', ->
-  #it 'supports append', ->
+  it 'sets File.path', ->
+    @testFile.path.should.eql('./test/testFile')

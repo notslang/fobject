@@ -3,7 +3,7 @@ nodefn = require 'when/node'
 
 # TODO: deal with file opening, closing, file descriptors...
 class File
-  constructor: (@filename) ->
+  constructor: (@path) ->
 
   ###*
    * Read from the file
@@ -12,7 +12,7 @@ class File
    * @return {Promise}
   ###
   read: (options={}) ->
-    nodefn.call(fs.readFile, @filename, options)
+    nodefn.call(fs.readFile, @path, options)
 
   ###*
    * Write `data` to the file
@@ -24,7 +24,7 @@ class File
    * @return {Promise}
   ###
   write: (data, options={}) ->
-    nodefn.call(fs.writeFile, @filename, data, options)
+    nodefn.call(fs.writeFile, @path, data, options)
 
   ###*
    * Append `data` to the file
@@ -36,7 +36,7 @@ class File
    * @return {Promise}
   ###
   append: (data, options={}) ->
-    nodefn.call(fs.appendFile, @filename, data, options)
+    nodefn.call(fs.appendFile, @path, data, options)
 
 module.exports = File
 
@@ -68,11 +68,11 @@ futimes(fd, atime, mtime, callback)
 write(fd, buffer, offset, length, position, callback)
 read(fd, buffer, offset, length, position, callback)
 
-readFile(filename, [options], callback)
-writeFile(filename, data, [options], callback)
-appendFile(filename, data, [options], callback)
+readFile(path, [options], callback)
+writeFile(path, data, [options], callback)
+appendFile(path, data, [options], callback)
 
-watchFile(filename, [options], listener)
-unwatchFile(filename, [listener])
-watch(filename, [options], [listener])
+watchFile(path, [options], listener)
+unwatchFile(path, [listener])
+watch(path, [options], [listener])
 ###

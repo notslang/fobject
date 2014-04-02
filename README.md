@@ -6,7 +6,7 @@ File = require 'fobject'
 configFile = new File('./config.json')
 configFile.read().done(
 	(data) ->
-		console.log "contents of #{configFile.filename}: #{data}"
+		console.log "contents of #{configFile.path}: #{data}"
 	(error) ->
 		console.log "something went wrong: #{error}"
 )
