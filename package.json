@@ -26,7 +26,8 @@
   "homepage": "https://github.com/slang800/fobject",
   "devDependencies": {
     "mocha": "^1.18.2",
-    "should": "^3.2.0"
+    "should": "^3.2.0",
+    "coffee-script": "^1.7.1"
   },
   "dependencies": {
     "when": "^3.0.1"
