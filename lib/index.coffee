@@ -7,7 +7,7 @@ class File
 
   ###*
    * Read from the file
-   * @param {String|null} [options.encoding=null] ignored if data is a buffer
+   * @param {String|null} [options.encoding=null]
    * @param {String} [options.flag='r']
    * @return {Promise}
   ###
