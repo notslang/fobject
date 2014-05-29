@@ -38,41 +38,25 @@ class File
   append: (data, options={}) ->
     nodefn.call(fs.appendFile, @path, data, options)
 
+  ###*
+   * Rename the file
+   * @return {Promise}
+  ###
+  rename: (newPath) ->
+    nodefn.call(fs.rename, @path, newPath).then( => @path = newPath)
+
+  ###*
+   * Delete the file
+   * @return {Promise}
+  ###
+  unlink: ->
+    nodefn.call(fs.unlink, @path)
+
+  ###*
+   * Return a Stat object for the file
+   * @return {Promise}
+  ###
+  stat: ->
+    nodefn.call(fs.stat, @path)
+
 module.exports = File
-
-###
-rename(oldPath, newPath, callback)
-ftruncate(fd, len, callback)
-truncate(path, len, callback)
-chown(path, uid, gid, callback)
-fchown(fd, uid, gid, callback)
-lchown(path, uid, gid, callback)
-chmod(path, mode, callback)
-fchmod(fd, mode, callback)
-lchmod(path, mode, callback)
-stat(path, callback)
-lstat(path, callback)
-fstat(fd, callback)
-link(srcpath, dstpath, callback)
-symlink(srcpath, dstpath, [type], callback)
-readlink(path, callback)
-realpath(path, [cache], callback)
-unlink(path, callback)
-rmdir(path, callback)
-mkdir(path, [mode], callback)
-readdir(path, callback)
-close(fd, callback)
-open(path, flags, [mode], callback)
-utimes(path, atime, mtime, callback)
-futimes(fd, atime, mtime, callback)
-write(fd, buffer, offset, length, position, callback)
-read(fd, buffer, offset, length, position, callback)
-
-readFile(path, [options], callback)
-writeFile(path, data, [options], callback)
-appendFile(path, data, [options], callback)
-
-watchFile(path, [options], listener)
-unwatchFile(path, [listener])
-watch(path, [options], [listener])
-###
