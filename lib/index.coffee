@@ -1,4 +1,5 @@
 fs = require 'fs'
+path = require 'path'
 nodefn = require 'when/node'
 
 # TODO: deal with file opening, closing, file descriptors...
@@ -58,5 +59,19 @@ class File
   ###
   stat: ->
     nodefn.call(fs.stat, @path)
+
+  ###*
+   * Get the extension of a file
+   * @return {String}
+  ###
+  extname: ->
+    path.extname(@path)
+
+  ###*
+   * Get the dirname of the file
+   * @return {String}
+  ###
+  dirname: ->
+    path.dirname(@path)
 
 module.exports = File
