@@ -3,7 +3,24 @@ path = require 'path'
 nodefn = require 'when/node'
 
 class File
-  constructor: (@path) ->
+  ###*
+   * @param {String} path The path to the file. This will be resolved to an
+     absolute path, so even if you change your cwd you can still access the same
+     file.
+   * @param {String} [opts.base=./] Used for relative pathing. This will not be
+     resolved to an absolute path. Typically where a glob starts.
+  ###
+  constructor: (@path, opts = {}) ->
+    @base = opts.base ? './'
+    @_resolvePaths()
+
+  ###*
+   * Normalize & resolve paths. Call if the File.path changes
+   * @private
+  ###
+  _resolvePaths: ->
+    @path = path.resolve(@base, @path)
+    @relative = path.relative(@base, @path)
 
   ###*
    * Read from the file
@@ -40,12 +57,16 @@ class File
 
   ###*
    * Rename the file
-   * @param {String} newPath The new path for the file. Will be resolved relative to
-     File.base.
+   * @param {String} newPath The new path for the file. Will be resolved
+     relative to File.base.
    * @return {Promise}
   ###
   rename: (newPath) ->
-    nodefn.call(fs.rename, @path, newPath).then( => @path = newPath)
+    newPath = path.resolve(@base, newPath)
+    nodefn.call(fs.rename, @path, newPath).then( =>
+      @path = newPath
+      @_resolvePaths()
+    )
 
   ###*
    * Delete the file

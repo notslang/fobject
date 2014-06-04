@@ -32,4 +32,10 @@ describe 'base functions', ->
       )
 
   it 'sets File.path', ->
-    @testFile.path.should.eql('./test/testFile')
+    @testFile.path.should.match(/\/test\/testFile$/)
+
+  it 'sets File.relative', ->
+    @testFile.relative.should.eql('test/testFile')
+
+  it 'sets File.base', ->
+    @testFile.base.should.eql('./')
