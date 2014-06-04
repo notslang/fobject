@@ -2,7 +2,6 @@ fs = require 'fs'
 path = require 'path'
 nodefn = require 'when/node'
 
-# TODO: deal with file opening, closing, file descriptors...
 class File
   constructor: (@path) ->
 
@@ -12,7 +11,7 @@ class File
    * @param {String} [options.flag='r']
    * @return {Promise}
   ###
-  read: (options={}) ->
+  read: (options = {}) ->
     nodefn.call(fs.readFile, @path, options)
 
   ###*
@@ -24,7 +23,7 @@ class File
    * @param {String} [options.flag='w']
    * @return {Promise}
   ###
-  write: (data, options={}) ->
+  write: (data, options = {}) ->
     nodefn.call(fs.writeFile, @path, data, options)
 
   ###*
@@ -36,11 +35,13 @@ class File
    * @param {String} [options.flag='w']
    * @return {Promise}
   ###
-  append: (data, options={}) ->
+  append: (data, options = {}) ->
     nodefn.call(fs.appendFile, @path, data, options)
 
   ###*
    * Rename the file
+   * @param {String} newPath The new path for the file. Will be resolved relative to
+     File.base.
    * @return {Promise}
   ###
   rename: (newPath) ->
