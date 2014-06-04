@@ -1,6 +1,7 @@
 fs = require 'fs'
 should = require 'should'
 File = require '../lib'
+CachedFile = require '../lib/cached'
 sequence = require 'when/sequence'
 
 describe 'File', ->
@@ -49,3 +50,43 @@ describe 'File', ->
 
   it 'sets File.base', ->
     @testFile.base.should.eql('./')
+
+describe 'CachedFile', ->
+  before ->
+    @testFile = new CachedFile('./test/testFile')
+
+  it 'supports write', (done) ->
+    @testFile.content = 'barfoo\n'
+    @testFile
+      .save()
+      .then( => @testFile.read(encoding: 'utf8'))
+      .done((data) ->
+        data.should.eql('barfoo\n')
+        done()
+      )
+
+  it 'supports append', (done) ->
+    @testFile.content += 'foobar\n'
+    @testFile
+      .save()
+      .then( => @testFile.read(encoding: 'utf8'))
+      .done((data) ->
+        data.should.eql('barfoo\nfoobar\n')
+        done()
+      )
+
+  it 'supports read', (done) ->
+    @testFile
+      .read(encoding: 'utf8')
+      .done((data) ->
+        data.should.eql('barfoo\nfoobar\n')
+        done()
+      )
+
+  it 'supports unlink', (done) ->
+    @testFile
+      .unlink()
+      .done( =>
+        fs.existsSync(@testFile.path).should.eql(false)
+        done()
+      )
