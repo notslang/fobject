@@ -55,31 +55,37 @@ describe 'CachedFile', ->
   before ->
     @testFile = new CachedFile('./test/testFile')
 
-  it 'supports write', (done) ->
+  it 'supports save', (done) ->
     @testFile.content = 'barfoo\n'
     @testFile
       .save()
-      .then( => @testFile.read(encoding: 'utf8'))
+      .then( => @testFile.read())
       .done((data) ->
         data.should.eql('barfoo\n')
         done()
       )
 
-  it 'supports append', (done) ->
-    @testFile.content += 'foobar\n'
+  it 'supports save (append)', (done) ->
+    appendContent = 'foobar\n'
+    @testFile.content += appendContent
+    appendedContent = undefined
+
+    @testFile.append = (data, options) ->
+      appendedContent = data
+
     @testFile
       .save()
-      .then( => @testFile.read(encoding: 'utf8'))
+      .then( => @testFile.read())
       .done((data) ->
-        data.should.eql('barfoo\nfoobar\n')
+        appendedContent.should.eql(appendContent)
         done()
       )
 
-  it 'supports read', (done) ->
+  it 'supports load', (done) ->
     @testFile
-      .read(encoding: 'utf8')
-      .done((data) ->
-        data.should.eql('barfoo\nfoobar\n')
+      .load()
+      .done((data) =>
+        @testFile.content.should.eql('barfoo\n')
         done()
       )
 
@@ -90,3 +96,12 @@ describe 'CachedFile', ->
         fs.existsSync(@testFile.path).should.eql(false)
         done()
       )
+
+  it 'sets File.path', ->
+    @testFile.path.should.match(/\/test\/testFile$/)
+
+  it 'sets File.relative', ->
+    @testFile.relative.should.eql('test/testFile')
+
+  it 'sets File.base', ->
+    @testFile.base.should.eql('./')

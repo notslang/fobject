@@ -4,6 +4,12 @@ W = require 'when'
 # TODO: add support for non-utf8 files
 class CachedFile extends File
   ###*
+   * The encoding of the file. Used as a default for `File.read` and
+   * `File.write`.
+  ###
+  encoding: undefined
+
+  ###*
    * The content of the file. Can be modified directly and if it is edited
      File.save() will be needed to persist the changes on disk.
    * @type {String}
@@ -25,6 +31,44 @@ class CachedFile extends File
    * @private
   ###
   _loadTime: undefined
+
+  ###*
+   * @param {String|null} [options.encoding='utf8']
+  ###
+  constructor: (path, options = {}) ->
+    @encoding = options.encoding ? 'utf8'
+    super(path, options)
+
+  ###*
+   * Read from the file
+   * @param {String} [options.flag='r']
+   * @return {Promise}
+  ###
+  read: (options = {}) ->
+    options.encoding = @encoding
+    super(options)
+
+  ###*
+   * Write `data` to the file
+   * @param {String|Buffer} data
+   * @param {Number} [options.mode=438] default is 0666 in Octal
+   * @param {String} [options.flag='w']
+   * @return {Promise}
+  ###
+  write: (data, options = {}) ->
+    options.encoding = @encoding
+    super(data, options)
+
+  ###*
+   * Append `data` to the file
+   * @param {String|Buffer} data
+   * @param {Number} [options.mode=438] default is 0666 in Octal
+   * @param {String} [options.flag='w']
+   * @return {Promise}
+  ###
+  append: (data, options = {}) ->
+    options.encoding = @encoding
+    super(data, options)
 
   ###*
    * Check the file mod-time to see if the file has been edited since the last
@@ -82,7 +126,7 @@ class CachedFile extends File
    * @return {Promise}
   ###
   load: ->
-    @read(encoding: 'utf8').then((data) =>
+    @read().then((data) =>
       _loadTime = Date.now()
       @_savedContent = @content = data
     )
