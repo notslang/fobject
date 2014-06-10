@@ -7,11 +7,11 @@ class File
    * @param {String} path The path to the file. This will be resolved to an
      absolute path, so even if you change your cwd you can still access the same
      file.
-   * @param {String} [opts.base=./] Used for relative pathing. This will not be
-     resolved to an absolute path. Typically where a glob starts.
+   * @param {String} [options.base=./] Used for relative pathing. This will not
+     be resolved to an absolute path. Typically where a glob starts.
   ###
-  constructor: (@path, opts = {}) ->
-    @base = opts.base ? './'
+  constructor: (@path, options = {}) ->
+    @base = options.base ? './'
     @_resolvePaths()
 
   ###*
