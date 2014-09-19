@@ -25,9 +25,10 @@
   },
   "homepage": "https://github.com/slang800/fobject",
   "devDependencies": {
+    "coffee-script": "^1.7.1",
+    "docme": "^0.2.1",
     "mocha": "^1.18.2",
-    "should": "^3.2.0",
-    "coffee-script": "^1.7.1"
+    "should": "^3.2.0"
   },
   "dependencies": {
     "graceful-fs": "^3.0.2",

@@ -4,6 +4,8 @@ nodefn = require 'when/node'
 
 class File
   ###*
+   * @class
+   * @name File
    * @param {String} path The path to the file. This will be resolved to an
      absolute path, so even if you change your cwd you can still access the same
      file.
@@ -16,6 +18,8 @@ class File
 
   ###*
    * Normalize & resolve paths. Call if the File.path changes
+   * @function
+   * @name _resolvePaths
    * @private
   ###
   _resolvePaths: ->
@@ -24,6 +28,8 @@ class File
 
   ###*
    * Read from the file
+   * @function
+   * @name read
    * @param {String|null} [options.encoding=null]
    * @param {String} [options.flag='r']
    * @return {Promise}
@@ -33,6 +39,8 @@ class File
 
   ###*
    * Write `data` to the file
+   * @function
+   * @name write
    * @param {String|Buffer} data
    * @param {String|null} [options.encoding='utf8'] ignored if data is a
      buffer
@@ -45,6 +53,8 @@ class File
 
   ###*
    * Append `data` to the file
+   * @function
+   * @name append
    * @param {String|Buffer} data
    * @param {String|null} [options.encoding='utf8'] ignored if data is a
      buffer
@@ -57,6 +67,8 @@ class File
 
   ###*
    * Rename the file
+   * @function
+   * @name rename
    * @param {String} newPath The new path for the file. Will be resolved
      relative to File.base.
    * @return {Promise}
@@ -70,6 +82,8 @@ class File
 
   ###*
    * Delete the file
+   * @function
+   * @name unlink
    * @return {Promise}
   ###
   unlink: ->
@@ -77,6 +91,8 @@ class File
 
   ###*
    * Return a Stat object for the file
+   * @function
+   * @name stat
    * @return {Promise}
   ###
   stat: ->
@@ -84,6 +100,8 @@ class File
 
   ###*
    * Get the extension of a file
+   * @function
+   * @name extname
    * @return {String}
   ###
   extname: ->
@@ -91,6 +109,8 @@ class File
 
   ###*
    * Get the dirname of the file
+   * @function
+   * @name dirname
    * @return {String}
   ###
   dirname: ->
