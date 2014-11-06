@@ -1,6 +1,7 @@
 fs = require 'graceful-fs'
 path = require 'path'
 nodefn = require 'when/node'
+semver = require 'semver'
 
 class File
   ###*
@@ -35,7 +36,7 @@ class File
    * @return {Promise}
   ###
   read: (options = {}) ->
-    nodefn.call(fs.readFile, @path, options)
+    nodefn.call(fs.readFile, @path, @_processOptionsObject(options))
 
   ###*
    * Write `data` to the file
@@ -49,7 +50,7 @@ class File
    * @return {Promise}
   ###
   write: (data, options = {}) ->
-    nodefn.call(fs.writeFile, @path, data, options)
+    nodefn.call(fs.writeFile, @path, data, @_processOptionsObject(options))
 
   ###*
    * Append `data` to the file
@@ -63,7 +64,7 @@ class File
    * @return {Promise}
   ###
   append: (data, options = {}) ->
-    nodefn.call(fs.appendFile, @path, data, options)
+    nodefn.call(fs.appendFile, @path, data, @_processOptionsObject(options))
 
   ###*
    * Rename the file
@@ -115,5 +116,31 @@ class File
   ###
   dirname: ->
     path.dirname(@path)
+
+  ###*
+   * Determine if we're using the new version of the FS API that supports an
+     options object.
+   * @return {Boolean} True if the version is >= 0.10.0 (when the options object
+     was introduced).
+  ###
+  _isOptionsObjectSupported: ->
+    semver.gte(process.version, '0.10.0')
+
+  ###*
+   * The pre-v0.10.0 fs functions took a encoding parameter and no options
+     object. This function deals with that difference.
+   * @param {[type]} options [description]
+  ###
+  _processOptionsObject: (options) ->
+    if @_isOptionsObjectSupported()
+      options
+    else
+      optionNames = Object.keys(options)
+      length = optionNames.length
+      if length is 0 or (length is 1 and optionNames[0] is 'encoding')
+        options.encoding
+      else
+        throw new Error("Node version <= 0.10.0 only supports an encoding
+        option. Called with #{optionNames.join()}")
 
 module.exports = File
