@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "graceful-fs": "^3.0.2",
+    "semver": "^4.1.0",
     "when": "^3.0.1"
   }
 }
