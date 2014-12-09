@@ -23,7 +23,7 @@ class File
    * @name _resolvePaths
    * @private
   ###
-  _resolvePaths: ->
+  _resolvePaths: =>
     @path = path.resolve(@base, @path)
     @relative = path.relative(@base, @path)
 
@@ -35,7 +35,7 @@ class File
    * @param {String} [options.flag='r']
    * @return {Promise}
   ###
-  read: (options = {}) ->
+  read: (options = {}) =>
     nodefn.call(fs.readFile, @path, @_processOptionsObject(options))
 
   ###*
@@ -49,7 +49,7 @@ class File
    * @param {String} [options.flag='w']
    * @return {Promise}
   ###
-  write: (data, options = {}) ->
+  write: (data, options = {}) =>
     nodefn.call(fs.writeFile, @path, data, @_processOptionsObject(options))
 
   ###*
@@ -63,7 +63,7 @@ class File
    * @param {String} [options.flag='w']
    * @return {Promise}
   ###
-  append: (data, options = {}) ->
+  append: (data, options = {}) =>
     nodefn.call(fs.appendFile, @path, data, @_processOptionsObject(options))
 
   ###*
@@ -74,7 +74,7 @@ class File
      relative to File.base.
    * @return {Promise}
   ###
-  rename: (newPath) ->
+  rename: (newPath) =>
     newPath = path.resolve(@base, newPath)
     nodefn.call(fs.rename, @path, newPath).then( =>
       @path = newPath
@@ -87,7 +87,7 @@ class File
    * @name unlink
    * @return {Promise}
   ###
-  unlink: ->
+  unlink: =>
     nodefn.call(fs.unlink, @path)
 
   ###*
@@ -96,7 +96,7 @@ class File
    * @name stat
    * @return {Promise}
   ###
-  stat: ->
+  stat: =>
     nodefn.call(fs.stat, @path)
 
   ###*
@@ -105,7 +105,7 @@ class File
    * @name extname
    * @return {String}
   ###
-  extname: ->
+  extname: =>
     path.extname(@path)
 
   ###*
@@ -114,7 +114,7 @@ class File
    * @name dirname
    * @return {String}
   ###
-  dirname: ->
+  dirname: =>
     path.dirname(@path)
 
   ###*
@@ -131,7 +131,7 @@ class File
      object. This function deals with that difference.
    * @param {[type]} options [description]
   ###
-  _processOptionsObject: (options) ->
+  _processOptionsObject: (options) =>
     if @_isOptionsObjectSupported()
       options
     else
