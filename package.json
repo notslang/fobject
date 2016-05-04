@@ -1,6 +1,6 @@
 {
   "name": "fobject",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A simple promise-based wrapper for file operations that treats files as objects.",
   "main": "./lib",
   "directories": {
